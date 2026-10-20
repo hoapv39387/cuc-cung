@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hệ Thống Chẩn Đoán Sức Khỏe 🩺</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .hospital-box {
+            width: 100%;
+            max-width: 450px;
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            text-align: center;
+            border-top: 8px solid #00a8ff;
+            transition: all 0.4s ease;
+        }
+        .icon {
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+        }
+        h1 {
+            font-size: 1.6rem;
+            color: #2f3640;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.1rem;
+            color: #718093;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        .btn {
+            background-color: #00a8ff;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            font-size: 1rem;
+            font-weight: bold;
+            border-radius: 25px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 168, 255, 0.3);
+            transition: 0.2s;
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        .btn:hover {
+            background-color: #0097e6;
+            transform: translateY(-2px);
+        }
+        /* Giao diện khi quét kết quả */
+        .loading-radar {
+            display: none;
+            width: 60px;
+            height: 60px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #ff4757;
+            border-radius: 50%;
+            margin: 20px auto;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        /* Trạng thái kết quả tình yêu */
+        .love-result {
+            display: none;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="hospital-box" id="main-box">
+        <div class="icon" id="box-icon">🏥</div>
+        <h1 id="box-title">Trung Tâm Y Tế Đột Xuất</h1>
+        
+        <!-- Màn hình 1: Câu hỏi triệu chứng -->
+        <div id="step-1">
+            <p>Hệ thống phát hiện bạn vừa có biểu hiện mệt mỏi hoặc dễ thương quá mức quy định. Hãy xác nhận tình trạng hiện tại để kiểm tra:</p>
+            <button class="btn" onclick="nextStep()">Tôi đang nhớ người yêu điên cuồng 🥺</button>
+            <button class="btn" onclick="nextStep()">Tôi thèm trà sữa và muốn gặp ai đó 🧋</button>
+        </div>
+
+        <!-- Màn hình 2: Đang quét dữ liệu -->
+        <div id="step-2" style="display: none;">
+            <p id="loading-text">Đang phân tích nhịp tim và mức độ đáng yêu...</p>
+            <div class="loading-radar"></div>
+        </div>
+
+        <!-- Màn hình 3: Kết quả bất ngờ -->
+        <div id="step-3" class="love-result">
+            <p style="color: #ff4757; font-weight: bold; font-size: 1.3rem;">BỆNH ÁN: THIẾU HƠI NGƯỜI YÊU KHẨN CẤP!</p>
+            <p style="color: #2f3640; text-align: left;">
+                • <b>Triệu chứng:</b> Xinh đẹp không lối thoát, đầu óc luôn nghĩ về anh.<br>
+                • <b>Cách điều trị:</b> Bắt buộc phải nhận một cái ôm thật chặt và một buổi đi chơi đi ăn ngay lập tức.<br><br>
+                Cảm ơn em đã tham gia chẩn đoán. Anh yêu em nhiều lắm, chuẩn bị tinh thần để anh qua đón đi chữa bệnh nhé! ❤️
+            </p>
+        </div>
+    </div>
+
+    <script>
+        function nextStep() {
+            // Chuyển sang màn hình quét
+            document.getElementById('step-1').style.display = 'none';
+            document.getElementById('step-2').style.display = 'block';
+            document.querySelector('.loading-radar').style.display = 'block';
+            document.getElementById('box-icon').innerHTML = "⚡";
+            document.getElementById('box-title').innerHTML = "Đang Chẩn Đoán...";
+
+            // Chờ 2.5 giây giả vờ quét rồi hiện kết quả
+            setTimeout(() => {
+                document.getElementById('step-2').style.display = 'none';
+                document.getElementById('step-3').style.display = 'block';
+                
+                // Thay đổi giao diện hộp sang màu hồng lãng mạn
+                const mainBox = document.getElementById('main-box');
+                mainBox.style.borderTop = '8px solid #ff4757';
+                document.getElementById('box-icon').innerHTML = "💝";
+                document.getElementById('box-title').innerHTML = "Kết Quả Chẩn Đoán Sức Khỏe";
+            }, 2500);
+        }
+    </script>
+
+</body>
+</html>
